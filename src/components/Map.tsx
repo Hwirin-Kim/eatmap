@@ -3,6 +3,7 @@
 import Script from "next/script";
 import * as stores from "@/data/store_data.json";
 import { markerSelector } from "@/utils/selectMarker";
+import { Dispatch, SetStateAction } from "react";
 
 declare global {
   interface Window {
@@ -14,7 +15,11 @@ declare global {
 const DEFAULT_LAT = 37.498095;
 const DEFAULT_LNG = 127.02761;
 
-export default function Map() {
+interface MapProps {
+  setMap: Dispatch<SetStateAction<any>>;
+}
+
+export default function Map({ setMap }: MapProps) {
   const loadKakaoMap = () => {
     //카카오맵 로드 함수
 
@@ -25,32 +30,11 @@ export default function Map() {
         level: 3, //지도의 레벨(확대, 축소 정도)
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOptions);
-      const imageSize = new window.kakao.maps.Size(40, 40); // 마커이미지의 크기입니다
 
-      stores.DATA.map((store) => {
-        const imageSrc = markerSelector(store.bizcnd_code_nm!);
-        const imageOption = {
-          offset: new window.kakao.maps.Point(27, 69),
-        }; // 마커이미지의 옵션
-        const markerImage = new window.kakao.maps.MarkerImage(
-          imageSrc,
-          imageSize,
-          imageOption
-        );
-        const markerPosition = new window.kakao.maps.LatLng(
-          store.y_dnts, //위도
-          store.x_cnts //경도
-        );
-
-        const marker = new window.kakao.maps.Marker({
-          position: markerPosition,
-          image: markerImage,
-        });
-        marker.setMap(map);
-      });
+      setMap(map);
     });
   };
-  console.log(stores);
+
   return (
     <>
       <Script
