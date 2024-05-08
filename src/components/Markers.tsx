@@ -18,7 +18,7 @@ export default function Markers({
       const imageSize = new window.kakao.maps.Size(40, 40); // 마커이미지의 크기입니다
 
       stores.map((store) => {
-        const imageSrc = markerSelector(store.bizcnd_code_nm!);
+        const imageSrc = markerSelector(store.category!);
         const imageOption = {
           offset: new window.kakao.maps.Point(27, 69),
         }; // 마커이미지의 옵션
@@ -28,8 +28,8 @@ export default function Markers({
           imageOption
         );
         const markerPosition = new window.kakao.maps.LatLng(
-          store.y_dnts, //위도
-          store.x_cnts //경도
+          store.lat, //위도
+          store.lng //경도
         );
 
         const marker = new window.kakao.maps.Marker({
@@ -38,7 +38,7 @@ export default function Markers({
         });
 
         // 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
-        const iwContent = `<div class="infowindow">${store.upso_nm}</div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        const iwContent = `<div class="infowindow">${store.name}</div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 
         // 커스텀 오버레이를 생성합니다
         const customOverlay = new window.kakao.maps.CustomOverlay({

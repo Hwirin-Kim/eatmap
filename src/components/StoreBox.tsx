@@ -6,8 +6,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import { FiMapPin, FiPhone, FiInfo, FiCheck } from "react-icons/fi";
 
 interface StoreBoxProps {
-  store: any;
-  setStore: Dispatch<SetStateAction<any>>;
+  store: StoreType | null;
+  setStore: Dispatch<SetStateAction<StoreType | null>>;
 }
 
 export default function StoreBox({ store, setStore }: StoreBoxProps) {
@@ -19,14 +19,14 @@ export default function StoreBox({ store, setStore }: StoreBoxProps) {
             <div className="flex justify-between items-start">
               <div className="flex gap-4 items-center">
                 <Image
-                  src={markerSelector(store.bizcnd_code_nm)}
+                  src={markerSelector(store?.category!)}
                   width={40}
                   height={40}
                   alt="icon_image"
                 />
                 <div>
-                  <div className="font-semibold">{store.upso_nm}</div>
-                  <div className="text-sm">{store.cob_code_nm}</div>
+                  <div className="font-semibold">{store.name}</div>
+                  {/* <div className="text-sm">{store.cob_code_nm}</div> */}
                 </div>
               </div>
               <button type="button" onClick={() => setStore(null)}>
@@ -34,28 +34,28 @@ export default function StoreBox({ store, setStore }: StoreBoxProps) {
               </button>
             </div>
             <ul>
-              {store.rdn_code_nm && (
+              {store.address && (
                 <li className="mt-4 flex gap-2 items-center">
                   <FiMapPin />
-                  {store.rdn_code_nm}
+                  {store.address}
                 </li>
               )}
-              {store.tel_no && (
+              {store.phone && (
                 <li className="mt-4 flex gap-2 items-center">
                   <FiPhone />
-                  {store.tel_no}
+                  {store.phone}
                 </li>
               )}
-              {store.crtfc_gbn_nm && (
+              {store.foodCertifyName && (
                 <li className="mt-4 flex gap-2 items-center">
                   <FiInfo />
-                  {store.crtfc_gbn_nm}
+                  {store.foodCertifyName}
                 </li>
               )}
-              {store.bizcnd_code_nm && (
+              {store.category && (
                 <li className="mt-4 flex gap-2 items-center">
                   <FiCheck />
-                  {store.bizcnd_code_nm}
+                  {store.category}
                 </li>
               )}
             </ul>
